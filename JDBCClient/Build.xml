@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="run" name="JDBC client compile and run">
+
+	<!--  clean folders for new files -->
+	<target name="clean">
+	<echo>Deleting directories</echo>
+	<delete dir="build/classes"/>
+	<delete dir="build/jar"/>
+	<!--  this we going to use it for list dependencies if I found how  -->
+	<delete dir="build/reports"/>
+	<echo>Delete successful</echo>
+	</target>
+	
+	<target name="create" depends="clean">
+	<echo>Create Working directories</echo>
+	<mkdir dir="build/classes"/>
+	<mkdir dir="build/jar"/>
+	<mkdir dir="build/report"/>
+	<echo>Create successful</echo>
+	</target>
+	
+	<!-- run project  -->
+	<target name="run" depends="compile,jar">
+	<echo>Run project</echo>
+		<java jar="build/jar" fork="on">
+		</java>
+	</target>
+	
+	<!-- Compile files using javac in directory staging -->
+	<target name="compile" depends="create">
+		<echo>Compiling now ...</echo>
+		<javac includeantruntime="false" srcdir="src" destdir="build/classes" debug="on"/>
+		<echo>Compiling successful</echo>
+	</target>
+	
+	<!--  build into jar -->
+	<target name="jar" depends="compile">
+	<echo>Export project to jar</echo>
+		<jar destfile="build/jar/JDBCClient.jar" basedir="build/classes"> 
+			<manifest>
+                <attribute name="Main-Class" value="jdbcclient.iangelov.homework.JDBCClient"/>
+			</manifest>
+		</jar>
+	<echo>Jar file created successfuly</echo>
+	</target>
+
+</project>
